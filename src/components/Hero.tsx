@@ -14,13 +14,12 @@ export function Hero() {
       <div className="container mx-auto px-6 text-center relative z-10">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
-            Soluções Digitais que{" "}
-            <span className="text-white/90 font-extrabold">Elevam</span>{" "}
-            sua Presença Online
+            <span className="block">Soluções digitais elevam</span>
+            <span className="block">sua presença online</span>
           </h1>
           
           <p className="text-xl md:text-2xl text-white/90 mb-8 max-w-3xl mx-auto leading-relaxed">
-            Transformamos suas ideias em <strong>sites profissionais</strong>, <strong>landing pages de conversão</strong> e <strong>sistemas internos</strong> que geram resultados reais para seu negócio.
+            Do conceito ao digital: sites, landing pages e sistemas internos que entregam resultados.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12 md:mb-16 lg:mb-20">
