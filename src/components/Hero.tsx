@@ -2,7 +2,7 @@ import { ArrowRight, Play } from "lucide-react";
 
 export function Hero() {
   return (
-    <section id="hero" className="relative min-h-screen flex items-center justify-center animated-gradient overflow-hidden pt-20 md:pt-0">
+    <section id="hero" className="relative min-h-screen flex items-center justify-center animated-gradient overflow-hidden pt-24 md:pt-28 lg:pt-32 xl:pt-36">
       {/* Geometric Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-20 left-10 w-20 h-20 border border-white/10 rounded-full floating-element"></div>
@@ -23,7 +23,7 @@ export function Hero() {
             Transformamos suas ideias em <strong>sites profissionais</strong>, <strong>landing pages de conversão</strong> e <strong>sistemas internos</strong> que geram resultados reais para seu negócio.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12 md:mb-16 lg:mb-20">
             <a
               href="#contact"
               className="bg-white text-primary px-8 py-4 rounded-lg font-bold text-lg hover:bg-white/95 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 flex items-center gap-2 group"
@@ -39,22 +39,6 @@ export function Hero() {
               <Play className="h-5 w-5" />
               Ver Serviços
             </a>
-          </div>
-
-          {/* Trust Indicators */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-2xl mx-auto">
-            <div className="text-center">
-              <div className="text-3xl font-bold text-white mb-2">50+</div>
-              <div className="text-white/80">Projetos Entregues</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-white mb-2">98%</div>
-              <div className="text-white/80">Clientes Satisfeitos</div>
-            </div>
-            <div className="text-center">
-              <div className="text-3xl font-bold text-white mb-2">24h</div>
-              <div className="text-white/80">Tempo de Resposta</div>
-            </div>
           </div>
         </div>
       </div>
