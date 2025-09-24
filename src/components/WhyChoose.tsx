@@ -82,9 +82,9 @@ export function WhyChoose() {
               <div className="text-4xl font-bold text-primary mb-2">100%</div>
               <div className="text-muted-foreground">Projetos Entregues no Prazo</div>
             </div>
-            <div>
-              <div className="text-4xl font-bold text-webgest-orange mb-2">24h</div>
-              <div className="text-muted-foreground">Tempo Médio de Resposta</div>
+            <div aria-label="Uptime 99%">
+              <div className="text-4xl font-bold text-webgest-orange mb-2">99%</div>
+              <div className="text-muted-foreground">Uptime</div>
             </div>
             <div>
               <div className="text-4xl font-bold text-primary mb-2">98%</div>
