@@ -5,7 +5,7 @@ export function About() {
     {
       icon: Shield,
       title: "Confiança",
-      description: "Transparência e qualidade em cada projeto"
+      description: "Transparência e qualidade"
     },
     {
       icon: Zap,
