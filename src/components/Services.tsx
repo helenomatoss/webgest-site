@@ -11,7 +11,6 @@ export function Services() {
         "Carregamento rápido",
         "Fácil atualização"
       ],
-      color: "from-primary to-primary-light"
     },
     {
       icon: Zap,
@@ -22,7 +21,6 @@ export function Services() {
         "A/B Testing",
         "Integração com CRM"
       ],
-      color: "from-webgest-orange to-webgest-orange-light"
     },
     {
       icon: Settings,
@@ -33,7 +31,6 @@ export function Services() {
         "Segurança avançada",
         "Analytics avançado"
       ],
-      color: "from-primary to-webgest-orange"
     }
   ];
 
@@ -50,15 +47,15 @@ export function Services() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-7xl mx-auto">
-          {services.map((service, index) => {
+          {services.map((service) => {
             const Icon = service.icon;
             return (
               <div
                 key={service.title}
-                className="bg-card rounded-2xl p-8 border border-border/50 hover:border-primary/30 transition-all duration-500 hover:-translate-y-2 hover:shadow-xl group"
+                className="bg-card rounded-2xl p-8 border border-border/50 hover:border-primary/30 transition-all duration-500 hover:-translate-y-2 hover:shadow-xl group flex flex-col h-full"
               >
                 {/* Icon */}
-                <div className={`bg-gradient-to-r ${service.color} p-4 rounded-xl inline-block mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                <div className="inline-flex h-14 w-14 items-center justify-center rounded-xl bg-gradient-to-r from-primary to-webgest-orange mb-6 group-hover:scale-110 transition-transform duration-300">
                   <Icon className="h-8 w-8 text-white" />
                 </div>
 
@@ -81,7 +78,7 @@ export function Services() {
                 </ul>
 
                 {/* CTA Button */}
-                <button className="w-full bg-gradient-to-r from-primary/10 to-webgest-orange/10 text-primary font-semibold py-3 px-6 rounded-lg hover:from-primary hover:to-webgest-orange hover:text-white transition-all duration-300 flex items-center justify-center gap-2 group-hover:scale-105">
+                <button className="mt-auto w-full self-start md:w-auto bg-gradient-to-r from-primary/10 to-webgest-orange/10 text-primary font-semibold py-3 px-6 rounded-lg hover:from-primary hover:to-webgest-orange hover:text-white transition-all duration-300 flex items-center justify-center gap-2 group-hover:scale-105">
                   Saiba Mais
                   <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
                 </button>
