@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, KeyboardEvent } from "react";
 import { Menu, X } from "lucide-react";
 import webgestLogo from "@/assets/webgest-logo-transparent.png";
 
@@ -16,6 +16,22 @@ export function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  const handleScrollToHero = () => {
+    const heroSection = document.getElementById('hero');
+    if (heroSection) {
+      heroSection.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    setIsMenuOpen(false);
+  };
+
+  const handleLogoKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
+    if (event.key === 'Enter') {
+      handleScrollToHero();
+    }
+  };
+
   const navigation = [
     { name: "Início", href: "#hero" },
     { name: "Sobre", href: "#about" },
@@ -32,7 +48,14 @@ export function Header() {
       <div className="container mx-auto px-6 py-2">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <div className="flex items-center">
+          <div
+            className="flex items-center cursor-pointer"
+            role="link"
+            tabIndex={0}
+            aria-label="Ir para o topo"
+            onClick={handleScrollToHero}
+            onKeyDown={handleLogoKeyDown}
+          >
             <img 
               src={webgestLogo} 
               alt="WebGest Logo" 
