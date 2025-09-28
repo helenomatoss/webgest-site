@@ -127,13 +127,22 @@ export function Header() {
              ))}
           </nav>
 
-          {/* CTA Button - Desktop */}
-          <div className="hidden md:block">
+          {/* CTA Buttons - Desktop */}
+          <div className="hidden md:flex items-center gap-4">
             <a
               href="#contact"
               className="bg-gradient-to-r from-primary to-webgest-orange text-white px-6 py-2.5 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5"
             >
               Fale Conosco
+            </a>
+            <a
+              href="https://portal.webgest.com.br"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Abrir Portal do Cliente"
+              className="bg-blue-600 text-white px-6 py-2.5 rounded-lg font-medium transition-all duration-300 hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-600"
+            >
+              Portal do Cliente
             </a>
           </div>
 
@@ -172,6 +181,16 @@ export function Header() {
                 className="bg-gradient-to-r from-primary to-webgest-orange text-white px-6 py-3 rounded-lg font-semibold text-center mt-4"
               >
                 Fale Conosco
+              </a>
+              <a
+                href="https://portal.webgest.com.br"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Abrir Portal do Cliente"
+                onClick={() => setIsMenuOpen(false)}
+                className="bg-blue-600 text-white px-6 py-3 rounded-lg font-medium text-center hover:bg-blue-700 transition-colors duration-200"
+              >
+                Portal do Cliente
               </a>
             </div>
           </nav>
