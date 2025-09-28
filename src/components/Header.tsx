@@ -1,6 +1,26 @@
-import { useState, useEffect, KeyboardEvent } from "react";
+import { useState, useEffect, KeyboardEvent, MouseEvent } from "react";
 import { Menu, X } from "lucide-react";
 import webgestLogo from "@/assets/webgest-logo-transparent.png";
+
+type NavigationItem = {
+  name: string;
+  href: string;
+  scrollId?: string;
+  ariaLabel?: string;
+};
+
+const navigation: NavigationItem[] = [
+  { name: "In\u00edcio", href: "#hero" },
+  { name: "Sobre", href: "#about" },
+  { name: "Servi\u00e7os", href: "#services" },
+  {
+    name: "Planos",
+    href: "/#plans",
+    scrollId: "plans",
+    ariaLabel: "Ir para a se\u00e7\u00e3o Planos"
+  },
+  { name: "Contato", href: "#contact" },
+];
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -32,12 +52,40 @@ export function Header() {
     }
   };
 
-  const navigation = [
-    { name: "Início", href: "#hero" },
-    { name: "Sobre", href: "#about" },
-    { name: "Serviços", href: "#services" },
-    { name: "Contato", href: "#contact" },
-  ];
+  const isHomePage = () =>
+    typeof window !== 'undefined' && window.location.pathname === '/';
+
+  const scrollToSection = (sectionId: string) => {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const handleNavigationClick = (
+    event: MouseEvent<HTMLAnchorElement>,
+    item: NavigationItem
+  ) => {
+    if (item.scrollId && isHomePage()) {
+      event.preventDefault();
+      scrollToSection(item.scrollId);
+      setIsMenuOpen(false);
+      return;
+    }
+
+    setIsMenuOpen(false);
+  };
+
+  const handleNavigationKeyDown = (
+    event: KeyboardEvent<HTMLAnchorElement>,
+    item: NavigationItem
+  ) => {
+    if (event.key === 'Enter' && item.scrollId && isHomePage()) {
+      event.preventDefault();
+      scrollToSection(item.scrollId);
+      setIsMenuOpen(false);
+    }
+  };
 
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
@@ -69,6 +117,9 @@ export function Header() {
                <a
                  key={item.name}
                  href={item.href}
+                 aria-label={item.ariaLabel}
+                 onClick={(event) => handleNavigationClick(event, item)}
+                 onKeyDown={(event) => handleNavigationKeyDown(event, item)}
                  className="text-foreground/80 hover:text-primary transition-all duration-300 font-medium relative after:content-[''] after:absolute after:w-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
                >
                  {item.name}
@@ -107,7 +158,9 @@ export function Header() {
                 <a
                   key={item.name}
                   href={item.href}
-                  onClick={() => setIsMenuOpen(false)}
+                  aria-label={item.ariaLabel}
+                  onClick={(event) => handleNavigationClick(event, item)}
+                  onKeyDown={(event) => handleNavigationKeyDown(event, item)}
                   className="text-foreground/80 hover:text-primary transition-colors duration-200 font-medium py-2"
                 >
                   {item.name}

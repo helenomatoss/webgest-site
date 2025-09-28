@@ -77,11 +77,8 @@ export function Services() {
                   ))}
                 </ul>
 
-                {/* CTA Button */}
-                <button className="mt-auto w-full self-start md:w-auto bg-gradient-to-r from-primary/10 to-webgest-orange/10 text-primary font-semibold py-3 px-6 rounded-lg hover:from-primary hover:to-webgest-orange hover:text-white transition-all duration-300 flex items-center justify-center gap-2 group-hover:scale-105">
-                  Saiba Mais
-                  <ArrowRight className="h-4 w-4 group-hover:translate-x-1 transition-transform" />
-                </button>
+                {/* Spacer to preserve layout after removing CTA */}
+                <div className="mt-auto" aria-hidden="true"></div>
               </div>
             );
           })}
