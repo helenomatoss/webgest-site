@@ -1,26 +1,57 @@
-import { useState, useEffect, KeyboardEvent, MouseEvent } from "react";
+﻿import { useState, useEffect, KeyboardEvent, MouseEventHandler } from "react";
 import { Menu, X } from "lucide-react";
 import webgestLogo from "@/assets/webgest-logo-transparent.png";
 
 type NavigationItem = {
   name: string;
   href: string;
-  scrollId?: string;
   ariaLabel?: string;
 };
 
 const navigation: NavigationItem[] = [
-  { name: "In\u00edcio", href: "#hero" },
-  { name: "Sobre", href: "#about" },
-  { name: "Servi\u00e7os", href: "#services" },
+  { name: "In\u00edcio", href: "#inicio" },
+  { name: "Sobre", href: "#sobre" },
+  { name: "Servi\u00e7os", href: "#servicos" },
   {
     name: "Planos",
-    href: "/#plans",
-    scrollId: "plans",
+    href: "#planos",
     ariaLabel: "Ir para a se\u00e7\u00e3o Planos"
   },
-  { name: "Contato", href: "#contact" },
+  { name: "Contato", href: "#contato" }
 ];
+
+const SECTION_ALIASES: Record<string, string> = {
+  inicio: "hero",
+  sobre: "about",
+  servicos: "services",
+  planos: "plans",
+  contato: "contato"
+};
+
+const scrollToId = (id: string) => {
+  if (typeof window === "undefined" || typeof document === "undefined") {
+    return;
+  }
+
+  const trimmed = id.trim().replace(/^#/, "");
+  if (!trimmed) return;
+
+  const normalized = trimmed.toLowerCase();
+  const alias = SECTION_ALIASES[normalized];
+  const target =
+    document.getElementById(trimmed) ||
+    (alias ? document.getElementById(alias) : null);
+
+  if (!target) return;
+
+  const headerEl =
+    document.querySelector<HTMLElement>("[data-header]") ||
+    document.querySelector<HTMLElement>("header");
+  const headerH = headerEl ? headerEl.offsetHeight : 80;
+
+  const y = target.getBoundingClientRect().top + window.pageYOffset - headerH - 8;
+  window.scrollTo({ top: Math.max(0, y), behavior: "smooth" });
+};
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -32,67 +63,53 @@ export function Header() {
       setIsScrolled(scrolled);
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const handleScrollToHero = () => {
-    const heroSection = document.getElementById('hero');
-    if (heroSection) {
-      heroSection.scrollIntoView({ behavior: 'smooth' });
-    } else {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+    scrollToId("#inicio");
     setIsMenuOpen(false);
   };
 
   const handleLogoKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       handleScrollToHero();
     }
   };
 
-  const isHomePage = () =>
-    typeof window !== 'undefined' && window.location.pathname === '/';
-
-  const scrollToSection = (sectionId: string) => {
-    const section = document.getElementById(sectionId);
-    if (section) {
-      section.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
-  const handleNavigationClick = (
-    event: MouseEvent<HTMLAnchorElement>,
-    item: NavigationItem
-  ) => {
-    if (item.scrollId && isHomePage()) {
-      event.preventDefault();
-      scrollToSection(item.scrollId);
+  const handleNavClick: MouseEventHandler<HTMLAnchorElement> = (event) => {
+    const href = (event.currentTarget.getAttribute("href") || "").trim();
+    if (!href.startsWith("#")) {
       setIsMenuOpen(false);
       return;
     }
 
+    if (
+      event.metaKey ||
+      event.ctrlKey ||
+      event.shiftKey ||
+      event.altKey ||
+      event.button !== 0
+    ) {
+      setIsMenuOpen(false);
+      return;
+    }
+
+    event.preventDefault();
+    scrollToId(href);
     setIsMenuOpen(false);
   };
 
-  const handleNavigationKeyDown = (
-    event: KeyboardEvent<HTMLAnchorElement>,
-    item: NavigationItem
-  ) => {
-    if (event.key === 'Enter' && item.scrollId && isHomePage()) {
-      event.preventDefault();
-      scrollToSection(item.scrollId);
-      setIsMenuOpen(false);
-    }
-  };
-
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-      isScrolled
-        ? 'bg-background/95 backdrop-blur-xl border-b border-border/30 shadow-lg'
-        : 'bg-gradient-to-r from-primary/10 via-primary/5 to-webgest-orange/10 backdrop-blur-sm border-b border-white/10'
-    }`}>
+    <header
+      data-header
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
+        isScrolled
+          ? "bg-background/95 backdrop-blur-xl border-b border-border/30 shadow-lg"
+          : "bg-gradient-to-r from-primary/10 via-primary/5 to-webgest-orange/10 backdrop-blur-sm border-b border-white/10"
+      }`}
+    >
       <div className="container mx-auto px-6 py-2">
         <div className="flex items-center h-16">
           <div className="flex flex-1 items-center min-w-0">
@@ -120,8 +137,7 @@ export function Header() {
                 key={item.name}
                 href={item.href}
                 aria-label={item.ariaLabel}
-                onClick={(event) => handleNavigationClick(event, item)}
-                onKeyDown={(event) => handleNavigationKeyDown(event, item)}
+                onClick={handleNavClick}
                 className="text-foreground/80 hover:text-primary transition-all duration-300 font-medium relative after:content-[''] after:absolute after:w-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
               >
                 {item.name}
@@ -133,7 +149,8 @@ export function Header() {
             {/* CTA Buttons - Desktop */}
             <div className="hidden md:flex items-center gap-4 pr-6">
               <a
-                href="#contact"
+                href="#contato"
+                onClick={handleNavClick}
                 className="bg-gradient-to-r from-primary to-webgest-orange text-white px-3 py-1.5 rounded-lg text-sm font-semibold hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5"
               >
                 Fale Conosco
@@ -172,16 +189,15 @@ export function Header() {
                   key={item.name}
                   href={item.href}
                   aria-label={item.ariaLabel}
-                  onClick={(event) => handleNavigationClick(event, item)}
-                  onKeyDown={(event) => handleNavigationKeyDown(event, item)}
+                  onClick={handleNavClick}
                   className="text-foreground/80 hover:text-primary transition-colors duration-200 font-medium py-2"
                 >
                   {item.name}
                 </a>
               ))}
               <a
-                href="#contact"
-                onClick={() => setIsMenuOpen(false)}
+                href="#contato"
+                onClick={handleNavClick}
                 className="bg-gradient-to-r from-primary to-webgest-orange text-white px-6 py-3 rounded-lg font-semibold text-center mt-4"
               >
                 Fale Conosco
@@ -203,4 +219,3 @@ export function Header() {
     </header>
   );
 }
-
