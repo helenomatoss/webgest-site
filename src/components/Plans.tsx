@@ -1,4 +1,4 @@
-import { Globe, Rocket, Crown, Sparkles, Target } from "lucide-react";
+﻿import { Globe, Rocket, Crown, Sparkles, Target } from "lucide-react";
 
 const mainPlans = [
   {
@@ -6,10 +6,10 @@ const mainPlans = [
     name: "Plano Basic",
     highlight: "Site Simples",
     features: [
-      "1 pagina (scroll unico) ou ate 3 paginas",
+      "1 página (scroll único) ou até 3 páginas",
       "Design responsivo",
-      "Integracao com WhatsApp",
-      "Entrega rapida (ate 7 dias)"
+      "Integração com WhatsApp",
+      "Entrega rápida (até 7 dias)"
     ]
   },
   {
@@ -17,10 +17,10 @@ const mainPlans = [
     name: "Plano Pro",
     highlight: "Site Profissional",
     features: [
-      "Ate 6 paginas",
-      "SEO basico",
-      "Criacao de 1 landing page por trimestre",
-      "Relatorios simples (Google Analytics)"
+      "Até 6 páginas",
+      "SEO básico",
+      "Criação de 1 landing page por trimestre",
+      "Relatórios simples (Google Analytics)"
     ]
   },
   {
@@ -28,11 +28,11 @@ const mainPlans = [
     name: "Plano Plus",
     highlight: "Site Premium",
     features: [
-      "Site completo e customizado (ate 10 paginas)",
-      "SEO avancado",
-      "Criacao de 1 landing page por mes",
-      "Relatorios completos",
-      "Suporte prioritario"
+      "Site completo e customizado (até 10 páginas)",
+      "SEO avançado",
+      "Criação de 1 landing page por mês",
+      "Relatórios completos",
+      "Suporte prioritário"
     ]
   }
 ];
@@ -42,9 +42,9 @@ const landingPages = [
     icon: Sparkles,
     name: "LP Express",
     features: [
-      "1 landing page focada em conversao",
-      "CTA forte e estrategico",
-      "Integracao com WhatsApp ou formulario"
+      "1 landing page focada em conversão",
+      "CTA forte e estratégico",
+      "Integração com WhatsApp ou formulário"
     ]
   },
   {
@@ -53,8 +53,8 @@ const landingPages = [
     features: [
       "1 landing page otimizada",
       "Copywriting premium",
-      "Teste A/B basico",
-      "Integracao com CRM"
+      "Teste A/B básico",
+      "Integração com CRM"
     ]
   }
 ];
@@ -68,7 +68,7 @@ export function Plans() {
             Planos
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Escolha a solucao ideal para o seu projeto digital
+            Escolha a solução ideal para o seu projeto digital
           </p>
         </div>
 
@@ -145,3 +145,4 @@ export function Plans() {
     </section>
   );
 }
+
