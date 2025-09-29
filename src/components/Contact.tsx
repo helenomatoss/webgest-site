@@ -1,38 +1,84 @@
-import { useState } from "react";
+﻿import React from "react";
 import { MessageCircle, Phone, Mail, Send } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
 
 export function Contact() {
-  const { toast } = useToast();
-  const [formData, setFormData] = useState({
-    name: "",
-    phone: "",
-    email: "",
-    message: ""
-  });
+  const [sending, setSending] = React.useState(false);
+  const [msg, setMsg] = React.useState<null | { type: "ok" | "err"; text: string }>(null);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    
-    // Simulate form submission
-    toast({
-      title: "Mensagem enviada com sucesso!",
-      description: "Entraremos em contato em até 24 horas.",
-    });
+    if (sending) return;
 
-    // Reset form
-    setFormData({ name: "", phone: "", email: "", message: "" });
-  };
+    const form = e.currentTarget;
+    const data = new FormData(form);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData({
-      ...formData,
-      [e.target.name]: e.target.value
-    });
-  };
+    // Honeypot
+    const hp = (data.get("company") || "").toString().trim();
+    if (hp) {
+      setMsg({ type: "ok", text: "Mensagem enviada! Em breve entraremos em contato." });
+      form.reset();
+      return;
+    }
+
+    // Coleta e sanitização
+    const nome = (data.get("nome") || "").toString().trim();
+    const email = (data.get("email") || "").toString().trim();
+    const telefoneRaw = (data.get("telefone") || "").toString();
+    const descricao = (data.get("descricao") || "").toString().trim();
+
+    const telefone = telefoneRaw.replace(/\D/g, "");
+
+    // Validações simples
+    if (nome.length < 2) {
+      setMsg({ type: "err", text: "Por favor, informe seu nome completo." });
+      return;
+    }
+    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    if (!emailOk) {
+      setMsg({ type: "err", text: "E-mail inválido." });
+      return;
+    }
+    if (telefone.length < 8) {
+      setMsg({ type: "err", text: "Telefone inválido." });
+      return;
+    }
+    if (descricao.length < 3) {
+      setMsg({ type: "err", text: "Escreva uma mensagem." });
+      return;
+    }
+
+    setSending(true);
+    setMsg(null);
+
+    try {
+      const res = await fetch("https://webgestsolutions.com/webconnect/api/lead.php", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          nome,
+          email,
+          telefone,
+          descricao,
+          company: ""
+        })
+      });
+
+      const json = await res.json().catch(() => ({}));
+      if (json && json.ok) {
+        setMsg({ type: "ok", text: "Mensagem enviada! Em breve entraremos em contato." });
+        form.reset();
+      } else {
+        setMsg({ type: "err", text: json?.message || "Não foi possível enviar. Tente novamente." });
+      }
+    } catch (error) {
+      setMsg({ type: "err", text: "Falha de conexão. Tente novamente." });
+    } finally {
+      setSending(false);
+    }
+  }
 
   return (
-    <section id="contact" className="py-20 bg-background relative tech-bg">
+    <section id="contato" className="py-20 bg-background relative tech-bg">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
@@ -110,22 +156,20 @@ export function Contact() {
           </div>
 
           {/* Contact Form */}
-          <div className="bg-card rounded-2xl p-8 border border-border/50 hover:border-primary/20 transition-colors duration-300">
+          <div className="bg-card rounded-2xl p-8 border border-border/50 hover:border-primary/20 transition-colors duration-300 relative z-10">
             <h3 className="text-2xl font-bold text-foreground mb-6">
               Envie sua Mensagem
             </h3>
-            
-            <form onSubmit={handleSubmit} className="space-y-6">
+
+            <form onSubmit={handleSubmit} className="space-y-6 relative z-10 pointer-events-auto">
               <div>
-                <label htmlFor="name" className="block text-sm font-semibold text-foreground mb-2">
+                <label htmlFor="nome" className="block text-sm font-semibold text-foreground mb-2">
                   Nome completo *
                 </label>
                 <input
                   type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
+                  id="nome"
+                  name="nome"
                   required
                   className="w-full px-4 py-3 rounded-lg border border-border bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors duration-300 outline-none"
                   placeholder="Seu nome completo"
@@ -133,15 +177,13 @@ export function Contact() {
               </div>
 
               <div>
-                <label htmlFor="phone" className="block text-sm font-semibold text-foreground mb-2">
+                <label htmlFor="telefone" className="block text-sm font-semibold text-foreground mb-2">
                   Telefone *
                 </label>
                 <input
                   type="tel"
-                  id="phone"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
+                  id="telefone"
+                  name="telefone"
                   required
                   className="w-full px-4 py-3 rounded-lg border border-border bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors duration-300 outline-none"
                   placeholder="(11) 99999-9999"
@@ -156,8 +198,6 @@ export function Contact() {
                   type="email"
                   id="email"
                   name="email"
-                  value={formData.email}
-                  onChange={handleChange}
                   required
                   className="w-full px-4 py-3 rounded-lg border border-border bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors duration-300 outline-none"
                   placeholder="seu@email.com"
@@ -165,14 +205,12 @@ export function Contact() {
               </div>
 
               <div>
-                <label htmlFor="message" className="block text-sm font-semibold text-foreground mb-2">
+                <label htmlFor="descricao" className="block text-sm font-semibold text-foreground mb-2">
                   Mensagem *
                 </label>
                 <textarea
-                  id="message"
-                  name="message"
-                  value={formData.message}
-                  onChange={handleChange}
+                  id="descricao"
+                  name="descricao"
                   required
                   rows={4}
                   className="w-full px-4 py-3 rounded-lg border border-border bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors duration-300 outline-none resize-none"
@@ -180,13 +218,22 @@ export function Contact() {
                 />
               </div>
 
+              <input type="text" name="company" tabIndex={-1} autoComplete="off" className="hidden" />
+
               <button
                 type="submit"
-                className="w-full bg-gradient-to-r from-primary to-webgest-orange text-white py-4 px-6 rounded-lg font-bold text-lg hover:shadow-2xl hover:shadow-primary/30 hover:-translate-y-2 transition-all duration-300 flex items-center justify-center gap-2 hover-scale cursor-pointer"
+                disabled={sending}
+                className="w-full bg-gradient-to-r from-primary to-webgest-orange text-white py-4 px-6 rounded-lg font-bold text-lg hover:shadow-2xl hover:shadow-primary/30 hover:-translate-y-2 transition-all duration-300 flex items-center justify-center gap-2 hover-scale cursor-pointer disabled:opacity-60"
               >
                 <Send className="h-5 w-5" />
-                Enviar Mensagem
+                {sending ? "Enviando..." : "Enviar Mensagem"}
               </button>
+
+              {msg && (
+                <p className={`mt-2 text-sm ${msg.type === "ok" ? "text-green-600" : "text-red-600"}`}>
+                  {msg.text}
+                </p>
+              )}
             </form>
           </div>
         </div>
@@ -194,3 +241,5 @@ export function Contact() {
     </section>
   );
 }
+
+
