@@ -89,74 +89,78 @@ export function Header() {
 
   return (
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-      isScrolled 
-        ? 'bg-background/95 backdrop-blur-xl border-b border-border/30 shadow-lg' 
+      isScrolled
+        ? 'bg-background/95 backdrop-blur-xl border-b border-border/30 shadow-lg'
         : 'bg-gradient-to-r from-primary/10 via-primary/5 to-webgest-orange/10 backdrop-blur-sm border-b border-white/10'
     }`}>
       <div className="container mx-auto px-6 py-2">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <div
-            className="flex items-center cursor-pointer"
-            role="link"
-            tabIndex={0}
-            aria-label="Ir para o topo"
-            onClick={handleScrollToHero}
-            onKeyDown={handleLogoKeyDown}
-          >
-            <img 
-              src={webgestLogo} 
-              alt="WebGest Logo" 
-              className="h-24 w-auto"
-            />
+        <div className="flex items-center h-16">
+          <div className="flex flex-1 items-center min-w-0">
+            {/* Logo */}
+            <div
+              className="flex items-center cursor-pointer"
+              role="link"
+              tabIndex={0}
+              aria-label="Ir para o topo"
+              onClick={handleScrollToHero}
+              onKeyDown={handleLogoKeyDown}
+            >
+              <img
+                src={webgestLogo}
+                alt="WebGest Logo"
+                className="h-24 w-auto"
+              />
+            </div>
           </div>
 
-           {/* Desktop Navigation */}
-           <nav className="hidden md:flex items-center space-x-8">
-             {navigation.map((item) => (
-               <a
-                 key={item.name}
-                 href={item.href}
-                 aria-label={item.ariaLabel}
-                 onClick={(event) => handleNavigationClick(event, item)}
-                 onKeyDown={(event) => handleNavigationKeyDown(event, item)}
-                 className="text-foreground/80 hover:text-primary transition-all duration-300 font-medium relative after:content-[''] after:absolute after:w-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
-               >
-                 {item.name}
-               </a>
-             ))}
+          {/* Desktop Navigation */}
+          <nav className="hidden md:flex items-center justify-center space-x-8">
+            {navigation.map((item) => (
+              <a
+                key={item.name}
+                href={item.href}
+                aria-label={item.ariaLabel}
+                onClick={(event) => handleNavigationClick(event, item)}
+                onKeyDown={(event) => handleNavigationKeyDown(event, item)}
+                className="text-foreground/80 hover:text-primary transition-all duration-300 font-medium relative after:content-[''] after:absolute after:w-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
+              >
+                {item.name}
+              </a>
+            ))}
           </nav>
 
-          {/* CTA Buttons - Desktop */}
-          <div className="hidden md:flex items-center gap-4">
-            <a
-              href="#contact"
-              className="bg-gradient-to-r from-primary to-webgest-orange text-white px-6 py-2.5 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5"
-            >
-              Fale Conosco
-            </a>
-            <a
-              href="https://portal.webgest.com.br"
-              target="_blank"
-              rel="noopener noreferrer"
-              aria-label="Abrir Portal do Cliente"
-              className="bg-blue-600 text-white px-6 py-2.5 rounded-lg font-medium transition-all duration-300 hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-600"
-            >
-              Portal do Cliente
-            </a>
-          </div>
+          <div className="flex flex-1 items-center justify-end">
+            {/* CTA Buttons - Desktop */}
+            <div className="hidden md:flex items-center gap-4 pr-6">
+              <a
+                href="#contact"
+                className="bg-gradient-to-r from-primary to-webgest-orange text-white px-6 py-2.5 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5"
+              >
+                Fale Conosco
+              </a>
+              <a
+                href="https://portal.webgest.com.br"
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label="Abrir Portal do Cliente"
+                className="bg-blue-600 text-white px-6 py-2.5 rounded-lg font-medium transition-all duration-300 hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-600"
+              >
+                Portal do Cliente
+              </a>
+            </div>
 
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden p-2 rounded-lg hover:bg-accent transition-colors"
-          >
-            {isMenuOpen ? (
-              <X className="h-6 w-6" />
-            ) : (
-              <Menu className="h-6 w-6" />
-            )}
-          </button>
+            {/* Mobile Menu Button */}
+            <button
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="md:hidden p-2 rounded-lg hover:bg-accent transition-colors"
+            >
+              {isMenuOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
+            </button>
+          </div>
         </div>
 
         {/* Mobile Navigation */}
