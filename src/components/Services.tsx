@@ -1,6 +1,13 @@
+import type React from "react";
 import { Globe, Zap, Settings, ArrowRight } from "lucide-react";
 
 export function Services() {
+  const goToContact = (e?: React.MouseEvent) => {
+    e?.preventDefault?.();
+    const el = document.getElementById('contato');
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  };
+
   const services = [
     {
       icon: Globe,
@@ -87,7 +94,8 @@ export function Services() {
         {/* Bottom CTA */}
         <div className="text-center mt-16">
           <a
-            href="#contact"
+            href="#contato"
+            onClick={goToContact}
             className="inline-flex items-center gap-2 bg-gradient-to-r from-primary to-webgest-orange text-white px-8 py-4 rounded-lg font-bold text-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
           >
             Solicitar Orçamento Personalizado
@@ -98,3 +106,4 @@ export function Services() {
     </section>
   );
 }
+
