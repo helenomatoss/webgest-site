@@ -57,7 +57,7 @@ export function Footer() {
               </div>
               <div className="flex items-center text-white/80">
                 <Mail className="h-4 w-4 mr-3 text-webgest-orange" />
-                contato@webgest.com.br
+                contato@webgestsolutions.com
               </div>
             </div>
           </div>
