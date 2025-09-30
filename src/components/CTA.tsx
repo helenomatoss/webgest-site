@@ -1,6 +1,11 @@
 import { ArrowRight, Sparkles } from "lucide-react";
 
 export function CTA() {
+  const handleGoToContact = () => {
+    const el = document.getElementById('contato');
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <section className="py-20 bg-gradient-to-r from-primary via-primary-light to-webgest-orange relative overflow-hidden">
       {/* Background Elements */}
@@ -31,7 +36,11 @@ export function CTA() {
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center mb-12">
             <a
-              href="#contact"
+              href="#contato"
+              onClick={(e) => {
+                e.preventDefault();
+                handleGoToContact();
+              }}
               className="bg-white text-primary px-10 py-5 rounded-lg font-bold text-xl hover:bg-white/95 transition-all duration-300 hover:shadow-2xl hover:-translate-y-1 flex items-center gap-3 group"
             >
               Solicitar Orçamento Agora

@@ -1,6 +1,11 @@
 import { ArrowRight, Play } from "lucide-react";
 
 export function Hero() {
+  const handleGoToContact = () => {
+    const el = document.getElementById('contato');
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  };
+
   return (
     <section id="hero" className="relative min-h-screen flex items-center justify-center animated-gradient overflow-hidden pt-24 md:pt-28 lg:pt-32 xl:pt-36">
       {/* Geometric Background Elements */}
@@ -24,7 +29,11 @@ export function Hero() {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12 md:mb-16 lg:mb-20">
             <a
-              href="#contact"
+              href="#contato"
+              onClick={(e) => {
+                e.preventDefault();
+                handleGoToContact();
+              }}
               className="bg-white text-primary px-8 py-4 rounded-lg font-bold text-lg hover:bg-white/95 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 flex items-center gap-2 group"
             >
               Solicitar Orçamento
