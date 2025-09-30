@@ -148,7 +148,7 @@ export function Contact() {
                 <div>
                   <h4 className="font-bold text-foreground mb-2">E-mail</h4>
                   <p className="text-muted-foreground text-sm">Resposta em até 24h</p>
-                  <p className="text-primary font-semibold mt-2">contato@webgest.com.br</p>
+                  <p className="text-primary font-semibold mt-2">contato@webgestsolutions.com</p>
                 </div>
               </a>
 
