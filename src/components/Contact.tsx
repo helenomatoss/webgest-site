@@ -1,5 +1,6 @@
 ﻿import React from "react";
 import { MessageCircle, Phone, Mail, Send } from "lucide-react";
+import { PHONE_DISPLAY, PHONE_ONLY, WHATSAPP_WA } from "@/config/contact";
 
 export function Contact() {
   const [sending, setSending] = React.useState(false);
@@ -105,7 +106,7 @@ export function Contact() {
             <div className="space-y-6">
               {/* WhatsApp */}
               <a
-                href="https://wa.me/5511999999999"
+                href={WHATSAPP_WA}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center p-6 bg-card rounded-2xl border border-border/50 hover:border-primary/50 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary/20 group hover-scale cursor-pointer"
@@ -118,13 +119,13 @@ export function Contact() {
                   <p className="text-muted-foreground text-sm">
                     Resposta rápida e atendimento personalizado
                   </p>
-                  <p className="text-primary font-semibold mt-2">(11) 99999-9999</p>
+                  <p className="text-primary font-semibold mt-2">{PHONE_DISPLAY}</p>
                 </div>
               </a>
 
               {/* Phone */}
               <a
-                href="#"
+                href={"tel:" + PHONE_ONLY}
                 className="flex items-center p-6 bg-card rounded-2xl border border-border/50 hover:border-primary/50 transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl hover:shadow-primary/20 group hover-scale cursor-pointer"
               >
                 <div className="bg-gradient-to-r from-primary to-webgest-orange p-4 rounded-xl mr-6 group-hover:scale-110 transition-transform duration-300">
@@ -133,7 +134,7 @@ export function Contact() {
                 <div>
                   <h4 className="font-bold text-foreground mb-2">Telefone</h4>
                   <p className="text-muted-foreground text-sm">Seg-Sex, 9h às 18h</p>
-                  <p className="text-primary font-semibold mt-2">(11) 99999-9999</p>
+                  <p className="text-primary font-semibold mt-2">{PHONE_DISPLAY}</p>
                 </div>
               </a>
 
@@ -186,7 +187,7 @@ export function Contact() {
                   name="telefone"
                   required
                   className="w-full px-4 py-3 rounded-lg border border-border bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors duration-300 outline-none"
-                  placeholder="(11) 99999-9999"
+                  placeholder={PHONE_DISPLAY}
                 />
               </div>
 

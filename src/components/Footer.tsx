@@ -1,4 +1,5 @@
 import { Facebook, Instagram, Linkedin, Twitter, Mail, Phone } from "lucide-react";
+import { PHONE_DISPLAY } from "@/config/contact";
 import webgestLogo from "@/assets/webgest-logo-transparent.png";
 
 export function Footer() {
@@ -53,7 +54,7 @@ export function Footer() {
             <div className="space-y-3">
               <div className="flex items-center text-white/80">
                 <Phone className="h-4 w-4 mr-3 text-webgest-orange" />
-                (11) 99999-9999
+                {PHONE_DISPLAY}
               </div>
               <div className="flex items-center text-white/80">
                 <Mail className="h-4 w-4 mr-3 text-webgest-orange" />
