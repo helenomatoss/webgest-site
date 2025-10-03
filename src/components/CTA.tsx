@@ -1,4 +1,5 @@
 import { ArrowRight, Sparkles } from "lucide-react";
+import { WHATSAPP_WA } from "@/config/contact";
 
 export function CTA() {
   const handleGoToContact = () => {
@@ -48,7 +49,7 @@ export function CTA() {
             </a>
             
             <a
-              href="https://wa.me/5511999999999"
+              href={WHATSAPP_WA}
               target="_blank"
               rel="noopener noreferrer"
               className="border-2 border-white text-white px-10 py-5 rounded-lg font-bold text-xl hover:bg-white hover:text-primary transition-all duration-300 flex items-center gap-3"

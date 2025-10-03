@@ -1,12 +1,10 @@
 import { MessageCircle } from "lucide-react";
-
-const WHATSAPP_NUMBER = "5511999999999";
-const WHATSAPP_URL = `https://wa.me/${WHATSAPP_NUMBER}`;
+import { WHATSAPP_WA } from "@/config/contact";
 
 export function WhatsAppButton() {
   return (
     <a
-      href={WHATSAPP_URL}
+      href={WHATSAPP_WA}
       target="_blank"
       rel="noopener noreferrer"
       aria-label="Abrir conversa no WhatsApp"
