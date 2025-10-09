@@ -1,3 +1,4 @@
+import { MouseEvent } from "react";
 import { Facebook, Instagram, Linkedin, Twitter, Mail, Phone } from "lucide-react";
 import { PHONE_DISPLAY } from "@/config/contact";
 import webgestLogo from "@/assets/webgest-logo-transparent.png";
@@ -7,7 +8,7 @@ export function Footer() {
     { name: "Início", href: "#hero" },
     { name: "Serviços", href: "#services" },
     { name: "Portfólio", href: "#portfolio" },
-    { name: "Contato", href: "#contact" }
+    { name: "Contato", href: "#contato" }
   ];
 
   const services = [
@@ -23,6 +24,14 @@ export function Footer() {
     { name: "LinkedIn", icon: Linkedin, href: "#" },
     { name: "Twitter", icon: Twitter, href: "#" }
   ];
+
+  const handleScrollToContact = (event: MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    if (typeof document === "undefined") return;
+
+    const section = document.getElementById("contato");
+    section?.scrollIntoView({ behavior: "smooth" });
+  };
 
   return (
     <footer className="bg-foreground text-white relative overflow-hidden">
@@ -117,7 +126,9 @@ export function Footer() {
             
             {/* CTA Button */}
             <a
-              href="#contact"
+              href="#contato"
+              onClick={handleScrollToContact}
+              aria-label="Ir para contato"
               className="bg-gradient-to-r from-primary to-webgest-orange text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
             >
               Iniciar Projeto
