@@ -1,13 +1,13 @@
-import { MouseEvent } from "react";
-import { Facebook, Instagram, Linkedin, Twitter, Mail, Phone } from "lucide-react";
+﻿import { MouseEvent } from "react";
+import { Instagram, Mail, Phone } from "lucide-react";
 import { PHONE_DISPLAY } from "@/config/contact";
 import webgestLogo from "@/assets/webgest-logo-transparent.png";
 
 export function Footer() {
   const quickLinks = [
-    { name: "Início", href: "#hero" },
-    { name: "Serviços", href: "#services" },
-    { name: "Portfólio", href: "#portfolio" },
+    { name: "InÃ­cio", href: "#hero" },
+    { name: "ServiÃ§os", href: "#services" },
+    { name: "PortfÃ³lio", href: "#portfolio" },
     { name: "Contato", href: "#contato" }
   ];
 
@@ -17,14 +17,6 @@ export function Footer() {
     "Sistemas Internos",
     "E-commerce"
   ];
-
-  const socialLinks = [
-    { name: "Facebook", icon: Facebook, href: "#" },
-    { name: "Instagram", icon: Instagram, href: "#" },
-    { name: "LinkedIn", icon: Linkedin, href: "#" },
-    { name: "Twitter", icon: Twitter, href: "#" }
-  ];
-
   const handleScrollToContact = (event: MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
     if (typeof document === "undefined") return;
@@ -55,7 +47,7 @@ export function Footer() {
               />
             </div>
             <p className="text-white/80 mb-6 leading-relaxed max-w-md">
-              Transformando ideias em <strong>soluções digitais de alto impacto</strong>. 
+              Transformando ideias em <strong>soluÃ§Ãµes digitais de alto impacto</strong>. 
               Especialistas em sites profissionais, landing pages e sistemas internos que geram resultados reais.
             </p>
             
@@ -74,7 +66,7 @@ export function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-xl font-bold mb-6 text-white">Links Rápidos</h3>
+            <h3 className="text-xl font-bold mb-6 text-white">Links RÃ¡pidos</h3>
             <ul className="space-y-4">
               {quickLinks.map((link) => (
                 <li key={link.name}>
@@ -91,7 +83,7 @@ export function Footer() {
 
           {/* Services */}
           <div>
-            <h3 className="text-xl font-bold mb-6 text-white">Nossos Serviços</h3>
+            <h3 className="text-xl font-bold mb-6 text-white">Nossos ServiÃ§os</h3>
             <ul className="space-y-4">
               {services.map((service) => (
                 <li key={service}>
@@ -108,20 +100,15 @@ export function Footer() {
         <div className="border-t border-white/20 py-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="flex space-x-6 mb-6 md:mb-0">
-              {socialLinks.map((social) => {
-                const Icon = social.icon;
-                return (
-                  <a
-                    key={social.name}
-                    href={social.href}
-                    className="text-white/60 hover:text-webgest-orange transition-all duration-300 hover:scale-110"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Icon className="h-6 w-6" />
-                  </a>
-                );
-              })}
+              <a
+                href="https://www.instagram.com/webgestsolutions/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white/70 hover:text-white transition-colors"
+                aria-label="Instagram – WebGest Solutions"
+              >
+                <Instagram className="h-6 w-6" />
+              </a>
             </div>
             
             {/* CTA Button */}
@@ -139,10 +126,14 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="border-t border-white/20 py-6 text-center">
           <p className="text-white/60">
-            © 2025 WebGest — Todos os direitos reservados. | Desenvolvido com ❤️ pela WebGest
+            Â© 2025 WebGest â€” Todos os direitos reservados. | Desenvolvido com â¤ï¸ pela WebGest
           </p>
         </div>
       </div>
     </footer>
   );
 }
+
+
+
+

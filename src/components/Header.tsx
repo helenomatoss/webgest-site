@@ -11,6 +11,11 @@ type NavigationItem = {
 const navigation: NavigationItem[] = [
   { name: "In\u00edcio", href: "#inicio" },
   { name: "Sobre", href: "#sobre" },
+  {
+    name: "Portf\u00f3lio",
+    href: "#portfolio",
+    ariaLabel: "Ir para a se\u00e7\u00e3o Portf\u00f3lio"
+  },
   { name: "Servi\u00e7os", href: "#servicos" },
   {
     name: "Planos",
@@ -25,7 +30,8 @@ const SECTION_ALIASES: Record<string, string> = {
   sobre: "about",
   servicos: "services",
   planos: "plans",
-  contato: "contato"
+  contato: "contato",
+  portfolio: "portfolio"
 };
 
 const scrollToId = (id: string) => {
@@ -219,3 +225,4 @@ export function Header() {
     </header>
   );
 }
+
