@@ -2,29 +2,22 @@ import React from "react";
 import { ExternalLink } from "lucide-react";
 import machineImg from "@/assets/machine.jpg";
 import bellaImg from "@/assets/bella.jpg";
-import thaynaImg from "@/assets/thayna.jpg";
 
 type Project = {
   title: string;
-  href: string;
   image: string;
+  href?: string;
 };
 
 const projects: Project[] = [
   {
     title: "Machine Produtora",
-    href: "#",
+    href: "https://machineprodutora.com.br/",
     image: machineImg
   },
   {
     title: "Studio Bella Bronze",
-    href: "#",
     image: bellaImg
-  },
-  {
-    title: "Thayna Baterias",
-    href: "#",
-    image: thaynaImg
   }
 ];
 
@@ -47,41 +40,55 @@ function Portfolio() {
           </p>
         </div>
 
-        <div className="mt-12 grid grid-cols-1 gap-6 sm:mt-14 sm:grid-cols-2 lg:grid-cols-3">
-          {projects.map((project) => (
-            <article
-              key={project.title}
-              className={[
-                "group relative rounded-2xl bg-white/95 shadow-lg ring-1 ring-black/5",
-                "transition-transform duration-300 will-change-transform",
-                "hover:-translate-y-1 hover:rotate-[-1.5deg]"
-              ].join(" ")}
-            >
-              <div className="rounded-2xl overflow-hidden h-[220px] bg-muted">
-                <img
-                  src={project.image}
-                  alt={project.title}
-                  className="h-full w-full object-cover"
-                  loading="lazy"
-                />
-              </div>
+        <div className="mt-12 grid grid-cols-1 gap-8 justify-items-center md:grid-cols-2">
+          {projects.map((project) => {
+            const CardInner = (
+              <article
+                className={[
+                  "group relative w-full max-w-[560px] rounded-2xl bg-white/95 shadow-lg ring-1 ring-black/5",
+                  "transition-transform duration-300 will-change-transform",
+                  "hover:-translate-y-1 hover:rotate-[-1.5deg]"
+                ].join(" ")}
+              >
+                <div className="h-[220px] overflow-hidden rounded-2xl bg-muted">
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    className="h-full w-full object-cover"
+                    loading="lazy"
+                  />
+                </div>
 
-              <div className="flex items-center justify-between gap-3 rounded-b-2xl px-5 py-4">
-                <h3 className="text-base font-semibold text-neutral-900">
-                  {project.title}
-                </h3>
+                <div className="flex items-center justify-between gap-3 rounded-b-2xl px-5 py-4">
+                  <h3 className="text-base font-semibold text-neutral-900">
+                    {project.title}
+                  </h3>
 
-                <a
-                  href={project.href}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#2F6BFF] to-[#FF7A3D] px-4 py-2 text-sm font-semibold text-white shadow-sm ring-1 ring-black/5 transition-all hover:brightness-105 group-hover:-translate-y-0.5"
-                >
-                  Visitar <ExternalLink size={16} />
-                </a>
+                  {project.href && (
+                    <span className="inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-[#2F6BFF] to-[#FF7A3D] px-4 py-2 text-sm font-semibold text-white shadow-sm ring-1 ring-black/5 transition-all hover:brightness-105 group-hover:-translate-y-0.5">
+                      Visitar <ExternalLink size={16} />
+                    </span>
+                  )}
+                </div>
+              </article>
+            );
+
+            return project.href ? (
+              <a
+                key={project.title}
+                href={project.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="block w-full max-w-[560px]"
+              >
+                {CardInner}
+              </a>
+            ) : (
+              <div key={project.title} className="block w-full max-w-[560px]">
+                {CardInner}
               </div>
-            </article>
-          ))}
+            );
+          })}
         </div>
       </div>
     </section>
