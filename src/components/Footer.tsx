@@ -1,5 +1,5 @@
 import { MouseEvent } from "react";
-import { Facebook, Instagram, Linkedin, Twitter, Mail, Phone } from "lucide-react";
+import { Instagram, Mail, Phone } from "lucide-react";
 import { PHONE_DISPLAY } from "@/config/contact";
 import webgestLogo from "@/assets/webgest-logo-transparent.png";
 
@@ -17,14 +17,6 @@ export function Footer() {
     "Sistemas Internos",
     "E-commerce"
   ];
-
-  const socialLinks = [
-    { name: "Facebook", icon: Facebook, href: "#" },
-    { name: "Instagram", icon: Instagram, href: "#" },
-    { name: "LinkedIn", icon: Linkedin, href: "#" },
-    { name: "Twitter", icon: Twitter, href: "#" }
-  ];
-
   const handleScrollToContact = (event: MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
     if (typeof document === "undefined") return;
@@ -108,20 +100,15 @@ export function Footer() {
         <div className="border-t border-white/20 py-8">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <div className="flex space-x-6 mb-6 md:mb-0">
-              {socialLinks.map((social) => {
-                const Icon = social.icon;
-                return (
-                  <a
-                    key={social.name}
-                    href={social.href}
-                    className="text-white/60 hover:text-webgest-orange transition-all duration-300 hover:scale-110"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <Icon className="h-6 w-6" />
-                  </a>
-                );
-              })}
+              <a
+                href="https://www.instagram.com/webgestsolutions/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white/70 hover:text-white transition-colors"
+                aria-label="Instagram – WebGest Solutions"
+              >
+                <Instagram className="h-6 w-6" />
+              </a>
             </div>
             
             {/* CTA Button */}
@@ -139,10 +126,14 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="border-t border-white/20 py-6 text-center">
           <p className="text-white/60">
-            © 2025 WebGest — Todos os direitos reservados. | Desenvolvido com ❤️ pela WebGest
+            © 2025 WebGest — Todos os direitos reservados. | Desenvolvido com ♥ pela WebGest
           </p>
         </div>
       </div>
     </footer>
   );
 }
+
+
+
+
