@@ -17,6 +17,7 @@ const projects: Project[] = [
   },
   {
     title: "Studio Bella Bronze",
+    href: "https://www.bellabronze.com.br/",
     image: bellaImg
   }
 ];
