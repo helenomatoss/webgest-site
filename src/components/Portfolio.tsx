@@ -2,6 +2,7 @@ import React from "react";
 import { ExternalLink } from "lucide-react";
 import machineImg from "@/assets/machine.jpg";
 import bellaImg from "@/assets/bella.jpg";
+import loyaltifyImg from "@/assets/loyaltify-logo.png";
 
 type Project = {
   title: string;
@@ -19,6 +20,11 @@ const projects: Project[] = [
     title: "Studio Bella Bronze",
     href: "https://www.bellabronze.com.br/",
     image: bellaImg
+  },
+  {
+    title: "Loyaltify",
+    href: "https://loyaltify.vercel.app/",
+    image: loyaltifyImg
   }
 ];
 
@@ -41,12 +47,12 @@ function Portfolio() {
           </p>
         </div>
 
-        <div className="mt-12 grid grid-cols-1 gap-8 justify-items-center md:grid-cols-2">
+        <div className="mt-12 grid grid-cols-1 items-stretch gap-8 md:grid-cols-2 xl:grid-cols-3">
           {projects.map((project) => {
             const CardInner = (
               <article
                 className={[
-                  "group relative w-full max-w-[560px] rounded-2xl bg-white/95 shadow-lg ring-1 ring-black/5",
+                  "group relative flex h-full flex-col rounded-2xl bg-white/95 shadow-lg ring-1 ring-black/5",
                   "transition-transform duration-300 will-change-transform",
                   "hover:-translate-y-1 hover:rotate-[-1.5deg]"
                 ].join(" ")}
@@ -80,12 +86,12 @@ function Portfolio() {
                 href={project.href}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="block w-full max-w-[560px]"
+                className="block h-full w-full"
               >
                 {CardInner}
               </a>
             ) : (
-              <div key={project.title} className="block w-full max-w-[560px]">
+              <div key={project.title} className="block h-full w-full">
                 {CardInner}
               </div>
             );
