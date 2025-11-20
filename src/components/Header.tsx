@@ -1,29 +1,25 @@
-﻿import { useState, useEffect, KeyboardEvent, MouseEventHandler } from "react";
+import { useEffect, useState, KeyboardEvent, MouseEventHandler } from "react";
 import { Menu, X } from "lucide-react";
 import webgestLogo from "@/assets/webgest-logo-transparent.png";
+import flagBrazil from "@/assets/flag-brazil.png";
+import flagUSA from "@/assets/flag-usa.png";
+import { useLanguage } from "@/i18n/LanguageContext";
+import type { TranslationKey } from "@/i18n/translations";
 
 type NavigationItem = {
-  name: string;
+  key: TranslationKey;
   href: string;
-  ariaLabel?: string;
+  ariaKey?: TranslationKey;
 };
 
 const navigation: NavigationItem[] = [
-  { name: "In\u00edcio", href: "#inicio" },
-  { name: "Sobre", href: "#sobre" },
-  {
-    name: "Portf\u00f3lio",
-    href: "#portfolio",
-    ariaLabel: "Ir para a se\u00e7\u00e3o Portf\u00f3lio"
-  },
-  { name: "Servi\u00e7os", href: "#servicos" },
-  {
-    name: "Planos",
-    href: "#planos",
-    ariaLabel: "Ir para a se\u00e7\u00e3o Planos"
-  },
-  { name: "Contato", href: "#contato" }
-];
+  { key: "header.nav.home", href: "#inicio" },
+  { key: "header.nav.about", href: "#sobre" },
+  { key: "header.nav.portfolio", href: "#portfolio", ariaKey: "header.nav.portfolio.aria" },
+  { key: "header.nav.services", href: "#servicos" },
+  { key: "header.nav.plans", href: "#planos", ariaKey: "header.nav.plans.aria" },
+  { key: "header.nav.contact", href: "#contato" }
+] as const;
 
 const SECTION_ALIASES: Record<string, string> = {
   inicio: "hero",
@@ -60,8 +56,14 @@ const scrollToId = (id: string) => {
 };
 
 export function Header() {
+  const { locale, setLocale, t } = useLanguage();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+
+  const handleChangeLang = (next: typeof locale) => {
+    if (next === locale) return;
+    setLocale(next);
+  };
 
   useEffect(() => {
     const handleScroll = () => {
@@ -107,6 +109,55 @@ export function Header() {
     setIsMenuOpen(false);
   };
 
+  const renderLanguageToggle = (onToggle?: () => void) => (
+    <div
+      className={
+        "flex h-9 items-center rounded-full border px-1 gap-2 transition-all " +
+        (isScrolled
+          ? "bg-slate-900 text-white border-slate-200/40 shadow-sm"
+          : "bg-white/10 text-white border-white/30 backdrop-blur-sm")
+      }
+    >
+      <button
+        type="button"
+        onClick={() => {
+          handleChangeLang("pt");
+          onToggle?.();
+        }}
+        className={
+          "flex h-7 items-center justify-center gap-1.5 px-2.5 py-1 rounded-full leading-none transition-colors " +
+          (locale === "pt"
+            ? "bg-white text-slate-900"
+            : "bg-transparent text-inherit/80 hover:bg-white/10")
+        }
+        aria-pressed={locale === "pt"}
+      >
+        <img src={flagBrazil} alt="Brasil" className="w-[18px] h-[12px] object-contain" />
+        <span className="text-xs font-medium leading-none">PT</span>
+      </button>
+
+      <span className="mx-1 h-4 w-px bg-white/20" />
+
+      <button
+        type="button"
+        onClick={() => {
+          handleChangeLang("en");
+          onToggle?.();
+        }}
+        className={
+          "flex h-7 items-center justify-center gap-1.5 px-2.5 py-1 rounded-full leading-none transition-colors " +
+          (locale === "en"
+            ? "bg-white text-slate-900"
+            : "bg-transparent text-inherit/80 hover:bg-white/10")
+        }
+        aria-pressed={locale === "en"}
+      >
+        <img src={flagUSA} alt="USA" className="w-[18px] h-[12px] object-contain" />
+        <span className="text-xs font-medium leading-none">EN</span>
+      </button>
+    </div>
+  );
+
   return (
     <header
       data-header
@@ -124,7 +175,7 @@ export function Header() {
               className="flex items-center cursor-pointer"
               role="link"
               tabIndex={0}
-              aria-label="Ir para o topo"
+              aria-label={t("header.logo.aria")}
               onClick={handleScrollToHero}
               onKeyDown={handleLogoKeyDown}
             >
@@ -140,36 +191,43 @@ export function Header() {
           <nav className="hidden md:flex items-center justify-center space-x-8">
             {navigation.map((item) => (
               <a
-                key={item.name}
+                key={item.key}
                 href={item.href}
-                aria-label={item.ariaLabel}
+                aria-label={item.ariaKey ? t(item.ariaKey) : undefined}
                 onClick={handleNavClick}
                 className="text-foreground/80 hover:text-primary transition-all duration-300 font-medium relative after:content-[''] after:absolute after:w-0 after:h-0.5 after:bottom-0 after:left-0 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
               >
-                {item.name}
+                {t(item.key)}
               </a>
             ))}
           </nav>
 
           <div className="flex flex-1 items-center justify-end">
             {/* CTA Buttons - Desktop */}
-            <div className="hidden md:flex items-center gap-4 pr-6">
+            <div className="hidden md:flex items-center gap-4 pl-6 pr-6">
               <a
                 href="#contato"
                 onClick={handleNavClick}
-                className="bg-gradient-to-r from-primary to-webgest-orange text-white px-3 py-1.5 rounded-lg text-sm font-semibold hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5"
+                className={
+                  "bg-gradient-to-r from-primary to-webgest-orange text-white px-3 py-1.5 rounded-lg text-sm font-semibold hover:shadow-lg transition-all duration-300 hover:-translate-y-0.5 whitespace-nowrap " +
+                  (isScrolled ? "shadow-lg shadow-black/10 scale-[1.02]" : "shadow-md")
+                }
               >
-                Fale Conosco
+                {t("header.cta.contact")}
               </a>
               <a
                 href="https://webgestsolutions.com/webconnect/login.php"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Abrir Portal do Cliente"
-                className="bg-blue-600 text-white px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-300 hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-600"
+                aria-label={t("header.cta.clientPortal.aria")}
+                className={
+                  "bg-blue-600 text-white px-3 py-1.5 rounded-lg text-sm font-medium transition-all duration-300 hover:bg-blue-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-blue-600 whitespace-nowrap " +
+                  (isScrolled ? "shadow-lg shadow-black/10 scale-[1.02]" : "shadow-md")
+                }
               >
-                Portal do Cliente
+                {t("header.cta.clientPortal")}
               </a>
+              <div className="ml-6 pr-2">{renderLanguageToggle()}</div>
             </div>
 
             {/* Mobile Menu Button */}
@@ -192,31 +250,38 @@ export function Header() {
             <div className="flex flex-col space-y-4">
               {navigation.map((item) => (
                 <a
-                  key={item.name}
+                  key={item.key}
                   href={item.href}
-                  aria-label={item.ariaLabel}
+                  aria-label={item.ariaKey ? t(item.ariaKey) : undefined}
                   onClick={handleNavClick}
                   className="text-foreground/80 hover:text-primary transition-colors duration-200 font-medium py-2"
                 >
-                  {item.name}
+                  {t(item.key)}
                 </a>
               ))}
+              {renderLanguageToggle(() => setIsMenuOpen(false))}
               <a
                 href="#contato"
                 onClick={handleNavClick}
-                className="bg-gradient-to-r from-primary to-webgest-orange text-white px-6 py-3 rounded-lg font-semibold text-center mt-4"
+                className={
+                  "bg-gradient-to-r from-primary to-webgest-orange text-white px-6 py-3 rounded-lg font-semibold text-center mt-4 " +
+                  (isScrolled ? "shadow-lg shadow-black/10 scale-[1.02]" : "shadow-md")
+                }
               >
-                Fale Conosco
+                {t("header.cta.contact")}
               </a>
               <a
                 href="https://webgestsolutions.com/webconnect/login.php"
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label="Abrir Portal do Cliente"
+                aria-label={t("header.cta.clientPortal.aria")}
                 onClick={() => setIsMenuOpen(false)}
-                className="bg-blue-600 text-white px-6 py-3 rounded-lg font-medium text-center hover:bg-blue-700 transition-colors duration-200"
+                className={
+                  "bg-blue-600 text-white px-6 py-3 rounded-lg font-medium text-center hover:bg-blue-700 transition-colors duration-200 " +
+                  (isScrolled ? "shadow-lg shadow-black/10 scale-[1.02]" : "shadow-md")
+                }
               >
-                Portal do Cliente
+                {t("header.cta.clientPortal")}
               </a>
             </div>
           </nav>
@@ -225,4 +290,3 @@ export function Header() {
     </header>
   );
 }
-

@@ -1,74 +1,90 @@
 ﻿import { Globe, Rocket, Crown, Sparkles, Target } from "lucide-react";
+import { useLanguage } from "@/i18n/LanguageContext";
+import type { TranslationKey } from "@/i18n/translations";
 
-const mainPlans = [
+type PlanConfig = {
+  icon: typeof Globe;
+  titleKey: TranslationKey;
+  highlightKey: TranslationKey;
+  featureKeys: TranslationKey[];
+};
+
+const mainPlans: PlanConfig[] = [
   {
     icon: Globe,
-    name: "Plano Basic",
-    highlight: "Site Simples",
-    features: [
-      "1 página (scroll único) ou até 3 páginas",
-      "Design responsivo",
-      "Integração com WhatsApp",
-      "Entrega rápida (até 7 dias)"
+    titleKey: "plans.basic.title",
+    highlightKey: "plans.basic.subtitle",
+    featureKeys: [
+      "plans.basic.item1",
+      "plans.basic.item2",
+      "plans.basic.item3",
+      "plans.basic.item4"
     ]
   },
   {
     icon: Rocket,
-    name: "Plano Pro",
-    highlight: "Site Profissional",
-    features: [
-      "Até 6 páginas",
-      "SEO básico",
-      "Criação de 1 landing page por trimestre",
-      "Relatórios simples (Google Analytics)"
+    titleKey: "plans.pro.title",
+    highlightKey: "plans.pro.subtitle",
+    featureKeys: [
+      "plans.pro.item1",
+      "plans.pro.item2",
+      "plans.pro.item3",
+      "plans.pro.item4"
     ]
   },
   {
     icon: Crown,
-    name: "Plano Plus",
-    highlight: "Site Premium",
-    features: [
-      "Site completo e customizado (até 10 páginas)",
-      "SEO avançado",
-      "Criação de 1 landing page por mês",
-      "Relatórios completos",
-      "Suporte prioritário"
+    titleKey: "plans.plus.title",
+    highlightKey: "plans.plus.subtitle",
+    featureKeys: [
+      "plans.plus.item1",
+      "plans.plus.item2",
+      "plans.plus.item3",
+      "plans.plus.item4",
+      "plans.plus.item5"
     ]
   }
 ];
 
-const landingPages = [
+type LandingPageConfig = {
+  icon: typeof Sparkles;
+  titleKey: TranslationKey;
+  featureKeys: TranslationKey[];
+};
+
+const landingPages: LandingPageConfig[] = [
   {
     icon: Sparkles,
-    name: "LP Express",
-    features: [
-      "1 landing page focada em conversão",
-      "CTA forte e estratégico",
-      "Integração com WhatsApp ou formulário"
+    titleKey: "plans.lps.express.title",
+    featureKeys: [
+      "plans.lps.express.item1",
+      "plans.lps.express.item2",
+      "plans.lps.express.item3"
     ]
   },
   {
     icon: Target,
-    name: "LP Pro",
-    features: [
-      "1 landing page otimizada",
-      "Copywriting premium",
-      "Teste A/B básico",
-      "Integração com CRM"
+    titleKey: "plans.lps.pro.title",
+    featureKeys: [
+      "plans.lps.pro.item1",
+      "plans.lps.pro.item2",
+      "plans.lps.pro.item3"
     ]
   }
 ];
 
 export function Plans() {
+  const { t } = useLanguage();
+
   return (
     <section id="plans" className="py-20 bg-gradient-to-b from-accent/20 to-background">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-            Planos
+            {t("plans.sectionTitle")}
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Escolha a solução ideal para o seu projeto digital
+            {t("plans.sectionSubtitle")}
           </p>
         </div>
 
@@ -85,17 +101,17 @@ export function Plans() {
                 </div>
 
                 <h3 className="text-2xl font-bold text-foreground mb-2">
-                  {plan.name}
+                  {t(plan.titleKey)}
                 </h3>
                 <p className="text-primary font-semibold mb-6">
-                  {plan.highlight}
+                  {t(plan.highlightKey)}
                 </p>
 
                 <ul className="space-y-3 mb-8">
-                  {plan.features.map((feature, index) => (
+                  {plan.featureKeys.map((feature, index) => (
                     <li key={index} className="flex items-center text-muted-foreground leading-relaxed">
                       <div className="w-2 h-2 bg-gradient-to-r from-primary to-webgest-orange rounded-full mr-3"></div>
-                      <span>{feature}</span>
+                      <span>{t(feature)}</span>
                     </li>
                   ))}
                 </ul>
@@ -108,7 +124,7 @@ export function Plans() {
 
         <div className="mt-16 max-w-5xl mx-auto">
           <h3 className="text-3xl font-bold text-foreground text-center mb-6">
-            Extras: Landing Pages
+            {t("plans.lps.title")}
           </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {landingPages.map((option) => {
@@ -123,14 +139,14 @@ export function Plans() {
                   </div>
 
                   <h4 className="text-2xl font-bold text-foreground mb-4">
-                    {option.name}
+                    {t(option.titleKey)}
                   </h4>
 
                   <ul className="space-y-3 mb-8">
-                    {option.features.map((feature, index) => (
+                    {option.featureKeys.map((feature, index) => (
                       <li key={index} className="flex items-center text-muted-foreground leading-relaxed">
                         <div className="w-2 h-2 bg-gradient-to-r from-primary to-webgest-orange rounded-full mr-3"></div>
-                        <span>{feature}</span>
+                        <span>{t(feature)}</span>
                       </li>
                     ))}
                   </ul>

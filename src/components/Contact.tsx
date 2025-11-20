@@ -1,10 +1,14 @@
-﻿import React from "react";
+import React from "react";
 import { MessageCircle, Phone, Mail, Send } from "lucide-react";
 import { PHONE_DISPLAY, PHONE_ONLY, WHATSAPP_WA } from "@/config/contact";
+import { useLanguage } from "@/i18n/LanguageContext";
+
+type MessageState = { type: "ok" | "err"; text: string } | null;
 
 export function Contact() {
+  const { t } = useLanguage();
   const [sending, setSending] = React.useState(false);
-  const [msg, setMsg] = React.useState<null | { type: "ok" | "err"; text: string }>(null);
+  const [msg, setMsg] = React.useState<MessageState>(null);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -16,12 +20,11 @@ export function Contact() {
     // Honeypot
     const hp = (data.get("company") || "").toString().trim();
     if (hp) {
-      setMsg({ type: "ok", text: "Mensagem enviada! Em breve entraremos em contato." });
+      setMsg({ type: "ok", text: t("contact.form.feedback.success") });
       form.reset();
       return;
     }
 
-    // Coleta e sanitização
     const nome = (data.get("nome") || "").toString().trim();
     const email = (data.get("email") || "").toString().trim();
     const telefoneRaw = (data.get("telefone") || "").toString();
@@ -29,22 +32,21 @@ export function Contact() {
 
     const telefone = telefoneRaw.replace(/\D/g, "");
 
-    // Validações simples
     if (nome.length < 2) {
-      setMsg({ type: "err", text: "Por favor, informe seu nome completo." });
+      setMsg({ type: "err", text: t("contact.form.feedback.invalidName") });
       return;
     }
     const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     if (!emailOk) {
-      setMsg({ type: "err", text: "E-mail inválido." });
+      setMsg({ type: "err", text: t("contact.form.feedback.invalidEmail") });
       return;
     }
     if (telefone.length < 8) {
-      setMsg({ type: "err", text: "Telefone inválido." });
+      setMsg({ type: "err", text: t("contact.form.feedback.invalidPhone") });
       return;
     }
     if (descricao.length < 3) {
-      setMsg({ type: "err", text: "Escreva uma mensagem." });
+      setMsg({ type: "err", text: t("contact.form.feedback.invalidMessage") });
       return;
     }
 
@@ -66,13 +68,18 @@ export function Contact() {
 
       const json = await res.json().catch(() => ({}));
       if (json && json.ok) {
-        setMsg({ type: "ok", text: "Mensagem enviada! Em breve entraremos em contato." });
+        setMsg({ type: "ok", text: t("contact.form.feedback.success") });
         form.reset();
       } else {
-        setMsg({ type: "err", text: json?.message || "Não foi possível enviar. Tente novamente." });
+        const fallback = t("contact.form.feedback.error");
+        const errMsg =
+          typeof json?.message === "string" && json.message.trim()
+            ? json.message
+            : fallback;
+        setMsg({ type: "err", text: errMsg });
       }
     } catch (error) {
-      setMsg({ type: "err", text: "Falha de conexão. Tente novamente." });
+      setMsg({ type: "err", text: t("contact.form.feedback.networkError") });
     } finally {
       setSending(false);
     }
@@ -83,10 +90,10 @@ export function Contact() {
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-            Entre em Contato
+            {t("contact.sectionTitle")}
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Pronto para começar seu projeto? Vamos conversar sobre suas necessidades digitais
+            {t("contact.sectionSubtitle")}
           </p>
         </div>
 
@@ -95,10 +102,10 @@ export function Contact() {
           <div className="space-y-8">
             <div>
               <h3 className="text-2xl font-bold text-foreground mb-6">
-                Fale Conosco Diretamente
+                {t("contact.direct.title")}
               </h3>
               <p className="text-muted-foreground mb-8">
-                Escolha a forma mais conveniente para entrar em contato. Estamos sempre prontos para atender você!
+                {t("contact.direct.description")}
               </p>
             </div>
 
@@ -115,9 +122,9 @@ export function Contact() {
                   <MessageCircle className="h-6 w-6 text-white" />
                 </div>
                 <div>
-                  <h4 className="font-bold text-foreground mb-2">WhatsApp</h4>
+                  <h4 className="font-bold text-foreground mb-2">{t("contact.direct.whatsapp.title")}</h4>
                   <p className="text-muted-foreground text-sm">
-                    Resposta rápida e atendimento personalizado
+                    {t("contact.direct.whatsapp.subtitle")}
                   </p>
                   <p className="text-primary font-semibold mt-2">{PHONE_DISPLAY}</p>
                 </div>
@@ -132,8 +139,8 @@ export function Contact() {
                   <Phone className="h-6 w-6 text-white" />
                 </div>
                 <div>
-                  <h4 className="font-bold text-foreground mb-2">Telefone</h4>
-                  <p className="text-muted-foreground text-sm">Seg-Sex, 9h às 18h</p>
+                  <h4 className="font-bold text-foreground mb-2">{t("contact.direct.phone.title")}</h4>
+                  <p className="text-muted-foreground text-sm">{t("contact.direct.phone.subtitle")}</p>
                   <p className="text-primary font-semibold mt-2">{PHONE_DISPLAY}</p>
                 </div>
               </a>
@@ -147,8 +154,8 @@ export function Contact() {
                   <Mail className="h-6 w-6 text-white" />
                 </div>
                 <div>
-                  <h4 className="font-bold text-foreground mb-2">E-mail</h4>
-                  <p className="text-muted-foreground text-sm">Resposta em até 24h</p>
+                  <h4 className="font-bold text-foreground mb-2">{t("contact.direct.email.title")}</h4>
+                  <p className="text-muted-foreground text-sm">{t("contact.direct.email.subtitle")}</p>
                   <p className="text-primary font-semibold mt-2">contato@webgestsolutions.com</p>
                 </div>
               </a>
@@ -159,13 +166,13 @@ export function Contact() {
           {/* Contact Form */}
           <div className="bg-card rounded-2xl p-8 border border-border/50 hover:border-primary/20 transition-colors duration-300 relative z-10">
             <h3 className="text-2xl font-bold text-foreground mb-6">
-              Envie sua Mensagem
+              {t("contact.form.title")}
             </h3>
 
             <form onSubmit={handleSubmit} className="space-y-6 relative z-10 pointer-events-auto">
               <div>
                 <label htmlFor="nome" className="block text-sm font-semibold text-foreground mb-2">
-                  Nome completo *
+                  {t("contact.form.name")}
                 </label>
                 <input
                   type="text"
@@ -173,13 +180,13 @@ export function Contact() {
                   name="nome"
                   required
                   className="w-full px-4 py-3 rounded-lg border border-border bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors duration-300 outline-none"
-                  placeholder="Seu nome completo"
+                  placeholder={t("contact.form.placeholder.name")}
                 />
               </div>
 
               <div>
                 <label htmlFor="telefone" className="block text-sm font-semibold text-foreground mb-2">
-                  Telefone *
+                  {t("contact.form.phone")}
                 </label>
                 <input
                   type="tel"
@@ -187,13 +194,13 @@ export function Contact() {
                   name="telefone"
                   required
                   className="w-full px-4 py-3 rounded-lg border border-border bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors duration-300 outline-none"
-                  placeholder={PHONE_DISPLAY}
+                  placeholder={t("contact.form.placeholder.phone")}
                 />
               </div>
 
               <div>
                 <label htmlFor="email" className="block text-sm font-semibold text-foreground mb-2">
-                  E-mail *
+                  {t("contact.form.email")}
                 </label>
                 <input
                   type="email"
@@ -201,13 +208,13 @@ export function Contact() {
                   name="email"
                   required
                   className="w-full px-4 py-3 rounded-lg border border-border bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors duration-300 outline-none"
-                  placeholder="seu@email.com"
+                  placeholder={t("contact.form.placeholder.email")}
                 />
               </div>
 
               <div>
                 <label htmlFor="descricao" className="block text-sm font-semibold text-foreground mb-2">
-                  Mensagem *
+                  {t("contact.form.message")}
                 </label>
                 <textarea
                   id="descricao"
@@ -215,7 +222,7 @@ export function Contact() {
                   required
                   rows={4}
                   className="w-full px-4 py-3 rounded-lg border border-border bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 transition-colors duration-300 outline-none resize-none"
-                  placeholder="Conte-nos sobre seu projeto..."
+                  placeholder={t("contact.form.placeholder.message")}
                 />
               </div>
 
@@ -227,7 +234,7 @@ export function Contact() {
                 className="w-full bg-gradient-to-r from-primary to-webgest-orange text-white py-4 px-6 rounded-lg font-bold text-lg hover:shadow-2xl hover:shadow-primary/30 hover:-translate-y-2 transition-all duration-300 flex items-center justify-center gap-2 hover-scale cursor-pointer disabled:opacity-60"
               >
                 <Send className="h-5 w-5" />
-                {sending ? "Enviando..." : "Enviar Mensagem"}
+                {sending ? t("contact.form.sending") : t("contact.form.submit")}
               </button>
 
               {msg && (
@@ -242,5 +249,3 @@ export function Contact() {
     </section>
   );
 }
-
-

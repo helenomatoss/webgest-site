@@ -1,10 +1,13 @@
 import { ArrowRight, Play } from "lucide-react";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 export function Hero() {
+  const { t } = useLanguage();
   const handleGoToContact = () => {
     const el = document.getElementById('contato');
     if (el) el.scrollIntoView({ behavior: 'smooth' });
   };
+  const heroTitle = t("hero.title").split("\n");
 
   return (
     <section id="hero" className="relative min-h-screen flex items-center justify-center animated-gradient overflow-hidden pt-24 md:pt-28 lg:pt-32 xl:pt-36">
@@ -19,12 +22,15 @@ export function Hero() {
       <div className="container mx-auto px-6 text-center relative z-10">
         <div className="max-w-4xl mx-auto">
           <h1 className="text-5xl md:text-7xl font-bold text-white mb-6 leading-tight">
-            <span className="block">Soluções digitais elevam</span>
-            <span className="block">sua presença online</span>
+            {heroTitle.map((line, index) => (
+              <span key={`${line}-${index}`} className="block">
+                {line}
+              </span>
+            ))}
           </h1>
           
           <p className="text-xl md:text-2xl text-white/90 mb-8 max-w-3xl mx-auto leading-relaxed">
-            Do conceito ao digital: sites, landing pages e sistemas internos que entregam resultados.
+            {t("hero.subtitle")}
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12 md:mb-16 lg:mb-20">
@@ -36,7 +42,7 @@ export function Hero() {
               }}
               className="bg-white text-primary px-8 py-4 rounded-lg font-bold text-lg hover:bg-white/95 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 flex items-center gap-2 group"
             >
-              Solicitar Orçamento
+              {t("hero.cta.primary")}
               <ArrowRight className="h-5 w-5 group-hover:translate-x-1 transition-transform" />
             </a>
             
@@ -45,7 +51,7 @@ export function Hero() {
               className="border-2 border-white text-white px-8 py-4 rounded-lg font-bold text-lg hover:bg-white hover:text-primary transition-all duration-300 flex items-center gap-2 group"
             >
               <Play className="h-5 w-5" />
-              Ver Serviços
+              {t("hero.cta.secondary")}
             </a>
           </div>
         </div>

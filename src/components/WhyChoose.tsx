@@ -1,51 +1,62 @@
 import { Users, Rocket, DollarSign, Trophy } from "lucide-react";
+import { useLanguage } from "@/i18n/LanguageContext";
+import type { TranslationKey } from "@/i18n/translations";
+
+type Differential = {
+  icon: typeof Users;
+  titleKey: TranslationKey;
+  descriptionKey: TranslationKey;
+  highlightKey: TranslationKey;
+};
+
+const differentials: Differential[] = [
+  {
+    icon: Users,
+    titleKey: "why.card.attendance.title",
+    descriptionKey: "why.card.attendance.text",
+    highlightKey: "why.card.attendance.highlight"
+  },
+  {
+    icon: Rocket,
+    titleKey: "why.card.strategy.title",
+    descriptionKey: "why.card.strategy.text",
+    highlightKey: "why.card.strategy.highlight"
+  },
+  {
+    icon: DollarSign,
+    titleKey: "why.card.pricing.title",
+    descriptionKey: "why.card.pricing.text",
+    highlightKey: "why.card.pricing.highlight"
+  },
+  {
+    icon: Trophy,
+    titleKey: "why.card.focus.title",
+    descriptionKey: "why.card.focus.text",
+    highlightKey: "why.card.focus.highlight"
+  }
+];
 
 export function WhyChoose() {
-  const differentials = [
-    {
-      icon: Users,
-      title: "Atendimento Personalizado",
-      description: "Cada projeto é único. Oferecemos suporte dedicado e comunicação direta do início ao fim.",
-      highlight: "Suporte dedicado 24/7"
-    },
-    {
-      icon: Rocket,
-      title: "Soluções Rápidas e Escaláveis",
-      description: "Tecnologia de qualidade, preparada para crescer junto com seu negócio.",
-      highlight: "Escalabilidade garantida"
-    },
-    {
-      icon: DollarSign,
-      title: "Preços Justos e Transparentes",
-      description: "Orçamentos claros, sem surpresas. Investimento que traz retorno real para sua empresa.",
-      highlight: "ROI comprovado"
-    },
-    {
-      icon: Trophy,
-      title: "Foco em Resultado",
-      description: "Não criamos apenas sites bonitos. Desenvolvemos soluções que geram leads, vendas e crescimento.",
-      highlight: "Resultados mensuráveis"
-    }
-  ];
+  const { t } = useLanguage();
 
   return (
     <section className="py-20 bg-background relative tech-bg">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-            Por que escolher a WebGest?
+            {t("why.sectionTitle")}
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Nossos diferenciais fazem toda a diferença no sucesso do seu projeto digital
+            {t("why.sectionSubtitle")}
           </p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
-          {differentials.map((differential, index) => {
+          {differentials.map((differential) => {
             const Icon = differential.icon;
             return (
               <div
-                key={differential.title}
+                key={differential.titleKey}
                 className="bg-card rounded-2xl p-8 border border-border/50 hover:border-primary/30 transition-all duration-500 hover:-translate-y-1 hover:shadow-lg group relative overflow-hidden"
               >
                 {/* Background Gradient */}
@@ -59,15 +70,15 @@ export function WhyChoose() {
 
                   {/* Content */}
                   <h3 className="text-2xl font-bold text-foreground mb-4">
-                    {differential.title}
+                    {t(differential.titleKey)}
                   </h3>
                   <p className="text-muted-foreground mb-4 leading-relaxed">
-                    {differential.description}
+                    {t(differential.descriptionKey)}
                   </p>
                   
                   {/* Highlight */}
                   <div className="inline-flex items-center bg-gradient-to-r from-primary/10 to-webgest-orange/10 text-primary font-semibold px-4 py-2 rounded-full text-sm">
-                    {differential.highlight}
+                    {t(differential.highlightKey)}
                   </div>
                 </div>
               </div>
@@ -80,15 +91,15 @@ export function WhyChoose() {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
             <div>
               <div className="text-4xl font-bold text-primary mb-2">100%</div>
-              <div className="text-muted-foreground">Projetos Entregues no Prazo</div>
+              <div className="text-muted-foreground">{t("why.stats.projects")}</div>
             </div>
-            <div aria-label="Uptime 99%">
+            <div aria-label={`${t("why.stats.uptime")} 99%`}>
               <div className="text-4xl font-bold text-webgest-orange mb-2">99%</div>
-              <div className="text-muted-foreground">Uptime</div>
+              <div className="text-muted-foreground">{t("why.stats.uptime")}</div>
             </div>
             <div>
               <div className="text-4xl font-bold text-primary mb-2">98%</div>
-              <div className="text-muted-foreground">Taxa de Satisfação</div>
+              <div className="text-muted-foreground">{t("why.stats.satisfaction")}</div>
             </div>
           </div>
         </div>

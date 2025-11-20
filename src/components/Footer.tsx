@@ -2,21 +2,24 @@ import { MouseEvent } from "react";
 import { Instagram, Mail, Phone } from "lucide-react";
 import { PHONE_DISPLAY } from "@/config/contact";
 import webgestLogo from "@/assets/webgest-logo-transparent.png";
+import { useLanguage } from "@/i18n/LanguageContext";
+
+const quickLinks = [
+  { nameKey: "footer.links.home", href: "#hero" },
+  { nameKey: "footer.links.services", href: "#services" },
+  { nameKey: "footer.links.portfolio", href: "#portfolio" },
+  { nameKey: "footer.links.contact", href: "#contato" }
+] as const;
+
+const services = [
+  "footer.services.sites",
+  "footer.services.landing",
+  "footer.services.systems",
+  "footer.services.ecommerce"
+] as const;
 
 export function Footer() {
-  const quickLinks = [
-    { name: "Início", href: "#hero" },
-    { name: "Serviços", href: "#services" },
-    { name: "Portfólio", href: "#portfolio" },
-    { name: "Contato", href: "#contato" }
-  ];
-
-  const services = [
-    "Sites Profissionais",
-    "Landing Pages",
-    "Sistemas Internos",
-    "E-commerce"
-  ];
+  const { t } = useLanguage();
   const handleScrollToContact = (event: MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
     if (typeof document === "undefined") return;
@@ -47,8 +50,9 @@ export function Footer() {
               />
             </div>
             <p className="text-white/80 mb-6 leading-relaxed max-w-md">
-              Transformando ideias em <strong>soluções digitais de alto impacto</strong>. 
-              Especialistas em sites profissionais, landing pages e sistemas internos que geram resultados reais.
+              {t("footer.description.part1")}{" "}
+              <strong>{t("footer.description.highlight")}</strong>.{" "}
+              {t("footer.description.part2")}
             </p>
             
             {/* Contact Info */}
@@ -66,15 +70,15 @@ export function Footer() {
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-xl font-bold mb-6 text-white">Links Rápidos</h3>
+            <h3 className="text-xl font-bold mb-6 text-white">{t("footer.links.title")}</h3>
             <ul className="space-y-4">
               {quickLinks.map((link) => (
-                <li key={link.name}>
+                <li key={link.nameKey}>
                   <a
                     href={link.href}
                     className="text-white/80 hover:text-webgest-orange transition-colors duration-300 hover:translate-x-1 inline-block"
                   >
-                    {link.name}
+                    {t(link.nameKey)}
                   </a>
                 </li>
               ))}
@@ -83,12 +87,12 @@ export function Footer() {
 
           {/* Services */}
           <div>
-            <h3 className="text-xl font-bold mb-6 text-white">Nossos Serviços</h3>
+            <h3 className="text-xl font-bold mb-6 text-white">{t("footer.services.title")}</h3>
             <ul className="space-y-4">
               {services.map((service) => (
                 <li key={service}>
                   <span className="text-white/80 block">
-                    {service}
+                    {t(service)}
                   </span>
                 </li>
               ))}
@@ -115,10 +119,10 @@ export function Footer() {
             <a
               href="#contato"
               onClick={handleScrollToContact}
-              aria-label="Ir para contato"
+              aria-label={t("footer.links.contact")}
               className="bg-gradient-to-r from-primary to-webgest-orange text-white px-6 py-3 rounded-lg font-semibold hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
             >
-              Iniciar Projeto
+              {t("footer.cta")}
             </a>
           </div>
         </div>
@@ -126,7 +130,7 @@ export function Footer() {
         {/* Bottom Bar */}
         <div className="border-t border-white/20 py-6 text-center">
           <p className="text-white/60">
-            © 2025 WebGest — Todos os direitos reservados. | Desenvolvido com ♥ pela WebGest
+            {t("footer.bottom.copyright")} | {t("footer.bottom.madeBy")}
           </p>
         </div>
       </div>

@@ -1,7 +1,10 @@
 import type React from "react";
 import { Globe, Zap, Settings, ArrowRight } from "lucide-react";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 export function Services() {
+  const { t } = useLanguage();
+
   const goToContact = (e?: React.MouseEvent) => {
     e?.preventDefault?.();
     const el = document.getElementById('contato');
@@ -11,32 +14,32 @@ export function Services() {
   const services = [
     {
       icon: Globe,
-      title: "Sites Profissionais",
-      description: "Sites institucionais, blogs e catálogos online que impressionam e convertem visitantes em clientes.",
+      title: t("services.sites.title"),
+      description: t("services.sites.text"),
       features: [
-        "Design responsivo",
-        "Carregamento rápido",
-        "Fácil atualização"
+        t("services.sites.feature1"),
+        t("services.sites.feature2"),
+        t("services.sites.feature3")
       ],
     },
     {
       icon: Zap,
-      title: "Landing Pages de Conversão",
-      description: "Páginas de alta performance focadas em captar leads e maximizar suas vendas online.",
+      title: t("services.landing.title"),
+      description: t("services.landing.text"),
       features: [
-        "Alta conversão",
-        "A/B Testing",
-        "Integração com CRM"
+        t("services.landing.feature1"),
+        t("services.landing.feature2"),
+        t("services.landing.feature3")
       ],
     },
     {
       icon: Settings,
-      title: "Sistemas Internos",
-      description: "Ferramentas sob medida para gestão, automação e organização dos processos da sua empresa.",
+      title: t("services.systems.title"),
+      description: t("services.systems.text"),
       features: [
-        "Desenvolvimento customizado",
-        "Segurança avançada",
-        "Analytics avançado"
+        t("services.systems.feature1"),
+        t("services.systems.feature2"),
+        t("services.systems.feature3")
       ],
     }
   ];
@@ -46,10 +49,10 @@ export function Services() {
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-            Nossos Serviços
+            {t("services.sectionTitle")}
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            Soluções digitais completas para levar seu negócio ao próximo nível
+            {t("services.sectionSubtitle")}
           </p>
         </div>
 
@@ -98,7 +101,7 @@ export function Services() {
             onClick={goToContact}
             className="inline-flex items-center gap-2 bg-gradient-to-r from-primary to-webgest-orange text-white px-8 py-4 rounded-lg font-bold text-lg hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
           >
-            Solicitar Orçamento Personalizado
+            {t("services.card.cta")}
             <ArrowRight className="h-5 w-5" />
           </a>
         </div>
