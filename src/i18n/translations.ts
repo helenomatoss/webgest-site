@@ -26,17 +26,28 @@ const pt = {
 
   // About
   "about.title": "Sobre a WebGest",
+  "about.description":
+    "Somos especialistas em transformar ideias em soluções digitais de alto impacto. Da criação de sites a sistemas internos sob medida, ajudamos empresas a crescer com tecnologia e inovação.",
   "about.description.part1": "Somos especialistas em transformar ideias em",
   "about.description.highlight1": "soluções digitais de alto impacto",
   "about.description.part2":
     "Da criação de sites a sistemas internos sob medida, ajudamos empresas a crescer com",
   "about.description.highlight2": "tecnologia e inovação",
+  "about.trust.title": "Confiança",
+  "about.trust.text": "Transparência e qualidade",
+  "about.tech.title": "Tecnologia",
+  "about.tech.text": "Soluções modernas e escaláveis",
+  "about.results.title": "Resultados",
+  "about.results.text": "Foco em conversão e performance",
   "about.card.trust.title": "Confiança",
   "about.card.trust.text": "Transparência e qualidade",
   "about.card.tech.title": "Tecnologia",
   "about.card.tech.text": "Soluções modernas e escaláveis",
   "about.card.results.title": "Resultados",
   "about.card.results.text": "Foco em conversão e performance",
+  "about.mission.title": "Nossa Missão",
+  "about.mission.text":
+    "Democratizar o acesso à tecnologia de qualidade, oferecendo soluções digitais que impulsionam o crescimento de empresas de todos os portes. Acreditamos que cada negócio merece uma presença digital profissional e eficiente.",
   "mission.title": "Nossa Missão",
   "mission.text":
     "Democratizar o acesso à tecnologia de qualidade, oferecendo soluções digitais que impulsionam o crescimento de empresas de todos os portes. Acreditamos que cada negócio merece uma presença digital profissional e eficiente.",
@@ -230,17 +241,28 @@ const en: typeof pt = {
 
   // About
   "about.title": "About WebGest",
+  "about.description":
+    "We specialize in turning ideas into high-impact digital solutions. From websites to custom internal systems, we help companies grow through technology and innovation.",
   "about.description.part1": "We specialize in turning ideas into",
   "about.description.highlight1": "high-impact digital solutions",
   "about.description.part2":
     "From building websites to tailor-made internal systems, we help businesses grow with",
   "about.description.highlight2": "technology and innovation",
+  "about.trust.title": "Trust",
+  "about.trust.text": "Transparency and quality",
+  "about.tech.title": "Technology",
+  "about.tech.text": "Modern and scalable solutions",
+  "about.results.title": "Results",
+  "about.results.text": "Focus on conversion and performance",
   "about.card.trust.title": "Trust",
   "about.card.trust.text": "Transparency and quality",
   "about.card.tech.title": "Technology",
   "about.card.tech.text": "Modern and scalable solutions",
   "about.card.results.title": "Results",
   "about.card.results.text": "Focused on conversion and performance",
+  "about.mission.title": "Our Mission",
+  "about.mission.text":
+    "To democratize access to quality technology by delivering digital solutions that drive growth for businesses of all sizes. We believe every company deserves a professional and effective online presence.",
   "mission.title": "Our Mission",
   "mission.text":
     "To democratize access to quality technology by offering digital solutions that drive growth for companies of all sizes. We believe every business deserves a professional, efficient digital presence.",

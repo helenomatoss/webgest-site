@@ -1,21 +1,24 @@
 import { Shield, Zap, Target } from "lucide-react";
+import { useLanguage } from "@/i18n/LanguageContext";
 
 export function About() {
+  const { t } = useLanguage();
+
   const values = [
     {
       icon: Shield,
-      title: "Confiança",
-      description: "Transparência e qualidade"
+      title: t("about.trust.title"),
+      description: t("about.trust.text")
     },
     {
       icon: Zap,
-      title: "Tecnologia",
-      description: "Soluções modernas e escaláveis"
+      title: t("about.tech.title"),
+      description: t("about.tech.text")
     },
     {
       icon: Target,
-      title: "Resultados",
-      description: "Foco em conversão e performance"
+      title: t("about.results.title"),
+      description: t("about.results.text")
     }
   ];
 
@@ -24,12 +27,10 @@ export function About() {
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-            Sobre a WebGest
+            {t("about.title")}
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Somos especialistas em transformar ideias em <strong>soluções digitais de alto impacto</strong>. 
-            Da criação de sites a sistemas internos sob medida, ajudamos empresas a crescer com 
-            <strong> tecnologia e inovação</strong>.
+            {t("about.description")}
           </p>
         </div>
 
@@ -59,12 +60,10 @@ export function About() {
         <div className="mt-20 bg-gradient-to-r from-primary/5 to-webgest-orange/5 rounded-2xl p-8 md:p-12 border border-border/20">
           <div className="max-w-4xl mx-auto text-center">
             <h3 className="text-3xl font-bold text-foreground mb-6">
-              Nossa Missão
+              {t("about.mission.title")}
             </h3>
             <p className="text-xl text-muted-foreground leading-relaxed">
-              Democratizar o acesso à tecnologia de qualidade, oferecendo soluções digitais 
-              que impulsionam o crescimento de empresas de todos os portes. Acreditamos que 
-              cada negócio merece uma presença digital profissional e eficiente.
+              {t("about.mission.text")}
             </p>
           </div>
         </div>
